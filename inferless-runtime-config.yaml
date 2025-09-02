@@ -4,6 +4,6 @@ build:
   system_packages:
     - "git"
   python_packages:
-    - "huggingface-cli"
+    - "gradio"
   run:
     - "git clone https://huggingface.co/spaces/dangthr/Qwen-Image-Edit/ && cd Qwen-Image-Edit && pip install -r requirements.txt"
