@@ -1,0 +1,9 @@
+build:
+  cuda_version: "12.1.1"
+  python_version: "3.10"
+  system_packages:
+    - "git"
+  python_packages:
+    - "websockets"
+  run:
+    - "git clone https://huggingface.co/spaces/dangthr/Qwen-Image-Edit/ && cd Qwen-Image-Edit && pip install -r requirements.txt"
