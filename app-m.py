@@ -35,7 +35,7 @@ volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
 @app.function(
     image=image,
     volumes={APP_DIR: volume},
-    gpu="H100",   # ✅ 这里修复了 GPU 写法
+    gpu="B200",   # ✅ 这里修复了 GPU 写法
     timeout=3600,
 )
 def run_command_in_container(command: str):
