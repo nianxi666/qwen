@@ -35,7 +35,7 @@ volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
 @app.function(
     image=image,
     volumes={APP_DIR: volume},
-    gpu=modal.gpu.H100(),  # 请求 A100 GPU
+    gpu=modal.gpu="H100"(),  # 请求 A100 GPU
     timeout=3600,  # 容器最长运行 1 小时
 )
 def run_command_in_container(command: str):
