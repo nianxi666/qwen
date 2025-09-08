@@ -9,10 +9,10 @@ APP_DIR = "/app"
 # --- Modal App 设置 ---
 app = modal.App(APP_NAME)
 
-# 定义环境镜像，安装所需依赖
+# 定义环境镜像
 image = (
     modal.Image.debian_slim(python_version="3.10")
-    .apt_install("git")  # 安装 git 以便从 GitHub 拉取 diffusers
+    .apt_install("git")
     .pip_install(
         "torch",
         "torchvision",
@@ -35,13 +35,10 @@ volume = modal.Volume.from_name(VOLUME_NAME, create_if_missing=True)
 @app.function(
     image=image,
     volumes={APP_DIR: volume},
-    gpu=modal.gpu="H100",  # 请求 A100 GPU
-    timeout=3600,  # 容器最长运行 1 小时
+    gpu="A100",   # ✅ 这里修复了 GPU 写法
+    timeout=3600,
 )
 def run_command_in_container(command: str):
-    """
-    在容器内安全地执行终端命令。
-    """
     print(f"准备执行命令: '{command}'")
     try:
         subprocess.run(command, shell=True, check=True, cwd=APP_DIR)
@@ -54,10 +51,4 @@ def run_command_in_container(command: str):
 
 @app.local_entrypoint()
 def main(command: str):
-    """
-    本地入口函数，用于在容器中执行命令。
-
-    使用方法:
-    modal run notebook.py --command "your-command-here"
-    """
     run_command_in_container.remote(command)
