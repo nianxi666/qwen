@@ -9,12 +9,20 @@ APP_DIR = "/app"
 # --- Modal App 设置 ---
 app = modal.App(APP_NAME)
 
-# 定义环境镜像，只安装 torch 和 diffusers
+# 定义环境镜像，安装所需依赖
 image = (
     modal.Image.debian_slim(python_version="3.10")
-    .apt_install("git")  # diffusers 从 GitHub 安装需要 git
+    .apt_install("git")  # 安装 git 以便从 GitHub 拉取 diffusers
     .pip_install(
         "torch",
+        "torchvision",
+        "transformers",
+        "accelerate",
+        "safetensors",
+        "sentencepiece",
+        "dashscope",
+        "peft",
+        "requests",
         "git+https://github.com/huggingface/diffusers.git",
     )
 )
